@@ -4,10 +4,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.function.Consumer;
 
+/**
+ * The purpose of this class is to offer a simple Runnable that counts down sequentially in seconds
+ */
 public class GenericTimer extends BukkitRunnable {
 
 	private int timeInSeconds;
 	private Consumer<Void> onTimerEnd;
+	private Consumer<Integer> onRun;
 
 	/**
 	 * A basic timer that counts down in seconds from the specified time without any other conditions being implemented
@@ -32,8 +36,23 @@ public class GenericTimer extends BukkitRunnable {
 			onTimerEnd.accept(null);
 			cancel();
 		} else {
+			onRun.accept(timeInSeconds);
 			timeInSeconds--;
 		}
+	}
+
+	/**
+	 * @param onRun function that occurs when {@link #run()} is called
+	 */
+	public void setOnRun(Consumer<Integer> onRun) {
+		this.onRun = onRun;
+	}
+
+	/**
+	 * @return the seconds of time remaining
+	 */
+	public int getTimeLeft() {
+		return timeInSeconds;
 	}
 
 }
