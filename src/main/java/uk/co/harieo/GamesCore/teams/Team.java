@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import net.md_5.bungee.api.ChatColor;
 import uk.co.harieo.GamesCore.games.Game;
+import uk.co.harieo.GamesCore.players.GamePlayer;
 
 public class Team implements Listener {
 
@@ -66,17 +67,19 @@ public class Team implements Listener {
 	 *
 	 * @param player to be added to this team
 	 */
-	public void addTeamMember(Player player) {
-		teamMembers.add(player.getUniqueId());
+	public void addTeamMember(GamePlayer player) {
+		teamMembers.add(player.toBukkit().getUniqueId());
+		player.setTeam(this);
 	}
 
 	/**
 	 * Removes a player from this team based on their {@link UUID}
 	 *
-	 * @param uuid of the player to be removed
+	 * @param player of the player to be removed
 	 */
-	public void removeTeamMember(UUID uuid) {
-		teamMembers.remove(uuid);
+	public void removeTeamMember(GamePlayer player) {
+		teamMembers.remove(player.getUniqueId());
+		player.setTeam(null);
 	}
 
 	/**
