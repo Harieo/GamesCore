@@ -1,5 +1,7 @@
 package uk.co.harieo.GamesCore.games;
 
+import org.bukkit.plugin.java.JavaPlugin;
+
 public interface Game {
 
 	/**
@@ -11,6 +13,11 @@ public interface Game {
 	 * @return the state of this game
 	 */
 	GameState getState();
+
+	/**
+	 * @return the {@link JavaPlugin} extended over this game
+	 */
+	JavaPlugin getPlugin();
 
 	/**
 	 * Sets the state of the game

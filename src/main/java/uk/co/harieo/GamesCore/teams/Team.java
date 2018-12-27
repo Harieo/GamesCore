@@ -5,12 +5,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import net.md_5.bungee.api.ChatColor;
+import uk.co.harieo.GamesCore.games.Game;
 
 public class Team implements Listener {
 
@@ -23,14 +23,14 @@ public class Team implements Listener {
 	/**
 	 * A construction that allows the storage of integer score, properties and list of members associated with a team
 	 *
-	 * @param plugin to register the listener associated with this team
+	 * @param game to register the listener associated with this team
 	 * @param teamName of the team, to be used in chat
 	 * @param teamColor of the team, to be used in chat
 	 */
-	public Team(JavaPlugin plugin, String teamName, ChatColor teamColor) {
+	public Team(Game game, String teamName, ChatColor teamColor) {
 		this.teamName = teamName;
 		this.teamColor = teamColor;
-		Bukkit.getPluginManager().registerEvents(this, plugin);
+		Bukkit.getPluginManager().registerEvents(this, game.getPlugin());
 	}
 
 	/**
