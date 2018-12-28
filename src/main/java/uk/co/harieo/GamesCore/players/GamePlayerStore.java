@@ -13,22 +13,29 @@ import uk.co.harieo.GamesCore.games.Game;
 
 public class GamePlayerStore implements Listener {
 
-	private static GamePlayerStore INSTANCE;
+	private static Map<Game, GamePlayerStore> INSTANCES = new HashMap<>();
 
-	private static Map<UUID, GamePlayer> cachedPlayers = new HashMap<>();
+	private Map<UUID, GamePlayer> cachedPlayers = new HashMap<>();
 
 	/**
-	 * Provides the instantiated instance of {@link GamePlayerStore} or instantiates it if not already done
+	 * Provides the instantiated instance of {@link GamePlayerStore} associated with the stated {@param game} or
+	 * instantiates it if not already done. Note: This system creates a new instance for each {@link Game} to separate
+	 * players from different systems with different values.
 	 *
 	 * @param game to associate this instance with
 	 * @return the instance of {@link GamePlayerStore}
 	 */
 	public static GamePlayerStore instance(Game game) {
-		if (INSTANCE == null) {
-			INSTANCE = new GamePlayerStore();
-			Bukkit.getPluginManager().registerEvents(INSTANCE, game.getPlugin());
+		GamePlayerStore instance;
+		if (!INSTANCES.containsKey(game)) {
+			instance = new GamePlayerStore();
+			INSTANCES.put(game, instance);
+			Bukkit.getPluginManager().registerEvents(instance, game.getPlugin());
+		} else {
+			instance = INSTANCES.get(game);
 		}
-		return INSTANCE;
+
+		return instance;
 	}
 
 	/**

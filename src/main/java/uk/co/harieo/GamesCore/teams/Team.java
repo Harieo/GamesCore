@@ -49,6 +49,13 @@ public class Team implements Listener {
 	}
 
 	/**
+	 * @return a coloured and formatted version of {@link #getTeamName()} and {@link #getTeamColor()}
+	 */
+	public String getFormattedName() {
+		return teamColor + ChatColor.BOLD.toString() + teamName;
+	}
+
+	/**
 	 * @return a list of the members of this team by UUID
 	 */
 	public List<UUID> getTeamMembers() {
