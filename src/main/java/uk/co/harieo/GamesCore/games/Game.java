@@ -2,6 +2,8 @@ package uk.co.harieo.GamesCore.games;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import uk.co.harieo.GamesCore.chat.ChatModule;
+
 public interface Game {
 
 	/**
@@ -25,6 +27,11 @@ public interface Game {
 	 * @param state to set the state to
 	 */
 	void setState(GameState state);
+
+	/**
+	 * @return the chat module which handles system messages for this game
+	 */
+	ChatModule chatModule();
 
 	/**
 	 * @return the maximum amount of players that may join
