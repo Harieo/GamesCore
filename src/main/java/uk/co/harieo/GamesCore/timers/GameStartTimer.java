@@ -41,6 +41,20 @@ public class GameStartTimer extends BukkitRunnable {
 		}
 	}
 
+	/**
+	 * Begins the timer, counting down with an interval of 20 ticks
+	 */
+	public void beginTimer() {
+		runTaskTimer(game.getPlugin(), 20, 20);
+	}
+
+	/**
+	 * @return the time left on this timer in seconds
+	 */
+	public int getTimeLeft() {
+		return timeInSeconds;
+	}
+
 	@Override
 	public void run() {
 		int currentPlayerCount = Bukkit.getOnlinePlayers().size();
@@ -67,6 +81,13 @@ public class GameStartTimer extends BukkitRunnable {
 			// If the player count has dropped and is now below the higher count with the time less than the shorterTime
 			if (timeInSeconds <= shorterTime) {
 				timeInSeconds = longerTime; // Reset the time to wait for more players
+				if (onTimeIncrease != null) {
+					onTimeIncrease.accept(longerTime);
+				}
+			}
+		} else if (currentPlayerCount < game.getMinimumPlayers()) {
+			if (timeInSeconds < longerTime) {
+				timeInSeconds = longerTime;
 				if (onTimeIncrease != null) {
 					onTimeIncrease.accept(longerTime);
 				}

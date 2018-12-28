@@ -3,12 +3,14 @@ package uk.co.harieo.GamesCore.timers;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.function.Consumer;
+import uk.co.harieo.GamesCore.games.Game;
 
 /**
  * The purpose of this class is to offer a simple Runnable that counts down sequentially in seconds
  */
 public class GenericTimer extends BukkitRunnable {
 
+	private Game game;
 	private int timeInSeconds;
 	private Consumer<Void> onTimerEnd;
 	private Consumer<Integer> onRun;
@@ -18,16 +20,25 @@ public class GenericTimer extends BukkitRunnable {
 	 * onto the timer. An example of such a condition would be {@link GameStartTimer} which implements player count
 	 * conditions based on upper and lower bounds.
 	 *
+	 * @param game associated with this timer
 	 * @param secondsToCount for the timer to start at in seconds
 	 * @param onTimerEnd a function to be called when the timer reaches 0
 	 */
-	public GenericTimer(int secondsToCount, Consumer<Void> onTimerEnd) {
+	public GenericTimer(Game game, int secondsToCount, Consumer<Void> onTimerEnd) {
 		if (secondsToCount <= 0) {
 			throw new IllegalArgumentException("Cannot create a timer with less than 1 second to count");
 		}
 
+		this.game = game;
 		this.timeInSeconds = secondsToCount;
 		this.onTimerEnd = onTimerEnd;
+	}
+
+	/**
+	 * Begins the timer, counting down with an interval of 20 ticks
+	 */
+	public void beginTimer() {
+		runTaskTimer(game.getPlugin(), 20, 20);
 	}
 
 	@Override
