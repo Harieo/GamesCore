@@ -107,6 +107,12 @@ public class Team implements Listener {
 		teamScore -= toSubtract;
 	}
 
+	/**
+	 * An event to remove players from the team in the event they leave to prevent exceptions from occurring in later
+	 * implementations of this code while handling offline players
+	 *
+	 * @param event to be handled
+	 */
 	@EventHandler
 	public void onQuit(PlayerQuitEvent event) {
 		teamMembers.remove(event.getPlayer().getUniqueId());
