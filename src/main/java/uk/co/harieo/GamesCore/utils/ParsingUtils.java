@@ -61,7 +61,7 @@ public class ParsingUtils {
 	 *
 	 * @param firstLocation in line with the second location
 	 * @param secondLocation in line with the first location
-	 * @return list of in between locations connecting the two stated locations, excluding the two stated locations
+	 * @return list of locations connecting the two stated locations, excluding the two stated locations
 	 */
 	public static List<Location> parseInlineLocations(Location firstLocation, Location secondLocation) {
 		List<Location> locations = new ArrayList<>();
