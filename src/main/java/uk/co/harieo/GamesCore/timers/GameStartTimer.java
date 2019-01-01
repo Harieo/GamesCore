@@ -1,6 +1,9 @@
 package uk.co.harieo.GamesCore.timers;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.function.Consumer;
@@ -17,7 +20,7 @@ public class GameStartTimer extends BukkitRunnable {
 
 	private Consumer<Integer> onTimeReduction; // To perform a function when the timeInSeconds is reduced
 	private Consumer<Integer> onTimeIncrease; // To perform a function when the timeInSeconds is increased
-	private Consumer<Void> onRun; // Adds custom functions to run() after normal checks have been made
+	private Consumer<Integer> onRun; // Adds custom functions to run() after normal checks have been made
 	private Consumer<Void> onTimerEnd; // To begin a process when the timer ends
 
 	/**
@@ -95,7 +98,7 @@ public class GameStartTimer extends BukkitRunnable {
 		}
 
 		if (onRun != null) {
-			onRun.accept(null); // Perform custom functions
+			onRun.accept(timeInSeconds); // Perform custom functions
 		}
 
 		lastPlayerCount = currentPlayerCount;
@@ -107,7 +110,7 @@ public class GameStartTimer extends BukkitRunnable {
 	 *
 	 * @param onRun function to be called
 	 */
-	public void setOnRun(Consumer<Void> onRun) {
+	public void setOnRun(Consumer<Integer> onRun) {
 		this.onRun = onRun;
 	}
 
@@ -136,6 +139,18 @@ public class GameStartTimer extends BukkitRunnable {
 	 */
 	public void setTimerEndEvent(Consumer<Void> onTimerEnd) {
 		this.onTimerEnd = onTimerEnd;
+	}
+
+	/**
+	 * Broadcasts the time remaining using {@link uk.co.harieo.GamesCore.chat.ChatModule} and plays a sound for each
+	 * player
+	 */
+	public void pingTime() {
+		Bukkit.broadcastMessage(game.chatModule()
+				.formatSystemMessage("Game will start in " + ChatColor.GREEN + timeInSeconds + " seconds..."));
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, (float) 0.5, (float) 0.5);
+		}
 	}
 
 }

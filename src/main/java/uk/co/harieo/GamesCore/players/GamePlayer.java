@@ -30,6 +30,10 @@ public class GamePlayer {
 		this.team = team;
 	}
 
+	public boolean hasTeam() {
+		return team != null;
+	}
+
 	// Score //
 	public int getScore() {
 		return score;
