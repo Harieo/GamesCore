@@ -12,12 +12,14 @@ import java.util.UUID;
 import net.md_5.bungee.api.ChatColor;
 import uk.co.harieo.GamesCore.games.Game;
 import uk.co.harieo.GamesCore.players.GamePlayer;
+import uk.co.harieo.GamesCore.players.GamePlayerStore;
 
 public class Team implements Listener {
 
+	private Game game;
 	private String teamName;
 	private ChatColor teamColor;
-	private List<UUID> teamMembers = new ArrayList<>();
+	private List<GamePlayer> teamMembers = new ArrayList<>();
 
 	private int teamScore = 0;
 
@@ -29,6 +31,7 @@ public class Team implements Listener {
 	 * @param teamColor of the team, to be used in chat
 	 */
 	public Team(Game game, String teamName, ChatColor teamColor) {
+		this.game = game;
 		this.teamName = teamName;
 		this.teamColor = teamColor;
 		Bukkit.getPluginManager().registerEvents(this, game.getPlugin());
@@ -56,9 +59,9 @@ public class Team implements Listener {
 	}
 
 	/**
-	 * @return a list of the members of this team by UUID
+	 * @return a list of the members of this team
 	 */
-	public List<UUID> getTeamMembers() {
+	public List<GamePlayer> getTeamMembers() {
 		return teamMembers;
 	}
 
@@ -75,7 +78,7 @@ public class Team implements Listener {
 	 * @param player to be added to this team
 	 */
 	public void addTeamMember(GamePlayer player) {
-		teamMembers.add(player.toBukkit().getUniqueId());
+		teamMembers.add(player);
 		player.setTeam(this);
 	}
 
@@ -85,7 +88,7 @@ public class Team implements Listener {
 	 * @param player of the player to be removed
 	 */
 	public void removeTeamMember(GamePlayer player) {
-		teamMembers.remove(player.getUniqueId());
+		teamMembers.remove(player);
 		player.setTeam(null);
 	}
 
@@ -115,7 +118,8 @@ public class Team implements Listener {
 	 */
 	@EventHandler
 	public void onQuit(PlayerQuitEvent event) {
-		teamMembers.remove(event.getPlayer().getUniqueId());
+		GamePlayer gamePlayer = GamePlayerStore.instance(game).get(event.getPlayer());
+		teamMembers.remove(gamePlayer);
 	}
 
 }

@@ -6,9 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import uk.co.harieo.GamesCore.games.Game;
 
 public class GamePlayerStore implements Listener {
@@ -53,6 +51,10 @@ public class GamePlayerStore implements Listener {
 			cachedPlayers.put(uuid, gamePlayer);
 			return gamePlayer;
 		}
+	}
+
+	public Collection<GamePlayer> getAll() {
+		return cachedPlayers.values();
 	}
 
 	// Caching related events //
