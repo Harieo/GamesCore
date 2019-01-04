@@ -1,11 +1,10 @@
 package uk.co.harieo.GamesCore.chat;
 
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.entity.Player;
 
 import net.md_5.bungee.api.ChatColor;
 
-public interface ChatModule extends Listener {
+public interface ChatModule {
 
 	/**
 	 * @return the prefix to be used before every system message
@@ -23,8 +22,8 @@ public interface ChatModule extends Listener {
 	/**
 	 * A method to handle announcing a player joining, which is a requirement for all games
 	 *
-	 * @param event to be handled by this module
+	 * @param player who is joining
 	 */
-	void announcePlayerJoin(PlayerJoinEvent event);
+	void announcePlayerJoin(Player player);
 
 }

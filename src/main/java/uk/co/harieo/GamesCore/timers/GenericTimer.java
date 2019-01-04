@@ -1,5 +1,9 @@
 package uk.co.harieo.GamesCore.timers;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.function.Consumer;
@@ -64,6 +68,18 @@ public class GenericTimer extends BukkitRunnable {
 	 */
 	public int getTimeLeft() {
 		return timeInSeconds;
+	}
+
+	/**
+	 * Broadcasts the time remaining using {@link uk.co.harieo.GamesCore.chat.ChatModule} and plays a sound for each
+	 * player
+	 */
+	public void pingTime() {
+		Bukkit.broadcastMessage(game.chatModule()
+				.formatSystemMessage("Time will end in " + ChatColor.GREEN + timeInSeconds + " second(s)..."));
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, (float) 0.5, (float) 0.5);
+		}
 	}
 
 }
