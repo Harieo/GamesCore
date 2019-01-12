@@ -15,10 +15,18 @@ public class GamePlayer {
 	private Team team;
 	private boolean isPlaying; // Example of someone who would not be playing is a spectator
 
+	private boolean isFake;
+
 	GamePlayer(Player player) {
 		this.player = player;
 		this.uuid = player.getUniqueId();
 		this.isPlaying = true;
+		this.isFake = false;
+	}
+
+	GamePlayer() {
+		this.isFake = true;
+		this.isPlaying = false; // Stops this being used as a real player to a limited extent
 	}
 
 	// Teams //
@@ -57,6 +65,10 @@ public class GamePlayer {
 	}
 
 	// Misc. Variables //
+	public boolean isFake() {
+		return isFake;
+	}
+
 	public UUID getUniqueId() {
 		return uuid;
 	}

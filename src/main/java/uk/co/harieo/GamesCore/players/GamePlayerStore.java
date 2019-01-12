@@ -2,9 +2,7 @@ package uk.co.harieo.GamesCore.players;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.*;
 import uk.co.harieo.GamesCore.games.Game;
@@ -14,6 +12,7 @@ public class GamePlayerStore implements Listener {
 	private static Map<Game, GamePlayerStore> INSTANCES = new HashMap<>();
 
 	private Map<UUID, GamePlayer> cachedPlayers = new HashMap<>();
+	private List<GamePlayer> fakePlayers = new ArrayList<>();
 
 	/**
 	 * Provides the instantiated instance of {@link GamePlayerStore} associated with the stated {@param game} or
@@ -53,15 +52,22 @@ public class GamePlayerStore implements Listener {
 		}
 	}
 
+	public GamePlayer createFakePlayer() {
+		GamePlayer fakePlayer = new GamePlayer();
+		fakePlayers.add(fakePlayer);
+		return fakePlayer;
+	}
+
+	public GamePlayer getFake(int id) {
+		return fakePlayers.get(id);
+	}
+
 	public Collection<GamePlayer> getAll() {
 		return cachedPlayers.values();
 	}
 
-	// Caching related events //
-	@EventHandler
-	public void onPlayerQuit(PlayerQuitEvent event) {
-		// To prevent unnecessary exposure of the class to an offline player, remove it from the cache
-		cachedPlayers.remove(event.getPlayer().getUniqueId());
+	public List<GamePlayer> getAllFakes() {
+		return fakePlayers;
 	}
 
 }

@@ -53,7 +53,6 @@ public class TimedVote implements Vote {
 		return true;
 	}
 
-	@Override
 	public void submitVote(Player player, String option) {
 		int votes = options.get(option);
 		options.replace(option, votes + 1);
@@ -67,17 +66,14 @@ public class TimedVote implements Vote {
 		return isVotingOpen;
 	}
 
-	@Override
 	public int getAmountOfVotes(String option) {
 		return options.get(option);
 	}
 
-	@Override
 	public Set<String> getOptions() {
 		return options.keySet();
 	}
 
-	@Override
 	public Map<String, Integer> getVotes() {
 		return options;
 	}
