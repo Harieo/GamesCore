@@ -68,4 +68,9 @@ public interface Game {
 	 */
 	void assignGameNumber(int gameNumber);
 
+	/**
+	 * Starts the game regardless of all factors
+	 */
+	void startGame();
+
 }

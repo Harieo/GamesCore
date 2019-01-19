@@ -57,7 +57,7 @@ public class GamePlayer {
 
 	// Spectating //
 	public boolean isPlaying() {
-		return isPlaying;
+		return isPlaying && player.isOnline();
 	}
 
 	public void setIsPlaying(boolean isPlaying) {

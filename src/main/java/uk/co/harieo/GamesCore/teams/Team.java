@@ -78,8 +78,10 @@ public class Team implements Listener {
 	 * @param player to be added to this team
 	 */
 	public void addTeamMember(GamePlayer player) {
-		teamMembers.add(player);
-		player.setTeam(this);
+		if (!teamMembers.contains(player)) {
+			teamMembers.add(player);
+			player.setTeam(this);
+		}
 	}
 
 	/**
