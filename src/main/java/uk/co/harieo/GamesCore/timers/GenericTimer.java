@@ -64,6 +64,15 @@ public class GenericTimer extends BukkitRunnable {
 	}
 
 	/**
+	 * Sets the remaining time for this timer
+	 *
+	 * @param timeInSeconds to set the time to
+	 */
+	public void setTimeLeft(int timeInSeconds) {
+		this.timeInSeconds = timeInSeconds;
+	}
+
+	/**
 	 * @return the seconds of time remaining
 	 */
 	public int getTimeLeft() {
