@@ -32,7 +32,7 @@ class GameBoardImpl {
 
 		ScoreboardManager manager = Bukkit.getScoreboardManager();
 		Scoreboard scoreboard = manager.getNewScoreboard();
-		Objective objective = scoreboard.registerNewObjective("main", "dummy", displayName);
+		Objective objective = scoreboard.registerNewObjective("main", "dummy");
 		objective.setDisplaySlot(slot);
 		this.scoreboard = scoreboard;
 		this.objective = objective;
